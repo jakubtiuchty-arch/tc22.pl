@@ -1,0 +1,40 @@
+# tc22.pl — Zebra TC22 terminal mobilny
+
+> Strona produktowa terminala mobilnego Zebra TC22, prowadzona przez TAKMA sp. z o.o. (autoryzowany partner Zebra Technologies od 2001 r.)
+
+## Zebra TC22 — podstawowe informacje
+
+Zebra TC22 to wytrzymały terminal mobilny klasy enterprise z ekranem 6" FHD+ (1080×2160) i procesorem Qualcomm 5430 2,1 GHz. Następca modelu TC21 (trzecia generacja serii TC2x).
+
+### Ceny netto PLN (marzec 2026)
+
+| Wariant | Skaner | RAM/Flash | Bateria | Cena netto |
+|---------|--------|-----------|---------|------------|
+| WLMT0-T22B6ABC2-A6 | SE4710 | 6/64 GB | 3 800 mAh | 2 417 zł |
+| WLMT0-T22B6ABE2-A6 | SE4710 | 6/64 GB | 5 200 mAh | 2 553 zł |
+| WLMT0-T22B8ABC8-A6 | SE4710 | 8/128 GB | 3 800 mAh | 2 830 zł |
+| WLMT0-T22B6CBC2-A6 | SE55 | 6/64 GB | 3 800 mAh | 2 963 zł |
+| WLMT0-T22B8ABD8-A6 | SE4710 | 8/128 GB | 3 800 mAh | 3 060 zł |
+| WLMT0-T22B6CBE2-A6 | SE55 | 6/64 GB | 5 200 mAh | 3 099 zł |
+| WLMT0-T22B8CBD8-A6 | SE55 | 8/128 GB | 3 800 mAh | 3 606 zł |
+
+### Kluczowe parametry
+- Wyświetlacz: 6" FHD+ (1080×2160), 450 nit, Gorilla Glass
+- Procesor: Qualcomm 5430 hex-core, 2.1 GHz
+- Skaner: SE4710 (do 35 cm) lub SE55 Advanced Range (10 cm–7,6 m)
+- IP68/IP65, MIL-STD-810H, upadki 1,5 m na beton
+- Wi-Fi 6/6E, Bluetooth 5.2, NFC, USB 3.1 Type-C
+- Bateria 3 800 / 5 200 mAh, wymienna hot-swap
+- Android z aktualizacją do v16, Mobility DNA Professional
+- Wymiary: 165 × 76,3 × 12,5 mm, waga: 236 g
+
+### TC22 vs TC27
+Jedyna różnica: TC22 = Wi-Fi only, TC27 = Wi-Fi + 5G/LTE + GPS. TC27 od 3 254 zł netto.
+
+### TC22 vs Honeywell CT32
+TC22 od 2 417 zł, CT32 od 3 389 zł. TC22 lżejszy (236 vs 269 g), Mobility DNA gratis. CT32 ma Android do v18 i FlexRange 11 m.
+
+### Dystrybutor
+TAKMA sp. z o.o., ul. Romana Maya 1, 61-371 Poznań
+Tel: +48 61 624 82 82, e-mail: handlowy@takma.com.pl
+Strona: https://takma.com.pl | Serwis: https://www.serwis-zebry.pl
