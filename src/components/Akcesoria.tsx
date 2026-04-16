@@ -12,10 +12,6 @@ const accessories = [
   { pn: 'TRG-TC2L-SNP1-01', name: 'Trigger handle', desc: 'Rękojeść pistoletowa do skanowania', price: 818, image: '/images/TRG-TC2L-SNP1-01.png', available: true },
 ]
 
-function formatPrice(n: number) {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-}
-
 function AccessoryCard({ acc }: { acc: typeof accessories[0] }) {
   const [added, setAdded] = useState(false)
 

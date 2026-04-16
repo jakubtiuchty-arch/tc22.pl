@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Calculator, TrendingDown, AlertTriangle } from 'lucide-react'
+import { TrendingDown, AlertTriangle } from 'lucide-react'
 
 const TC22_PRICE = 2417
 const SMARTPHONE_PRICE = 2500

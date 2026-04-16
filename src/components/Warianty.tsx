@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Star, Info } from 'lucide-react'
+import { Star } from 'lucide-react'
 import { getPrices, formatPrice } from '@/data/prices'
 
 const prices = getPrices()
