@@ -34,10 +34,6 @@ const faqs = [
     a: 'TC22 nie ma wbudowanego czytnika RFID UHF, ale warianty z 8-pinowym złączem eConnex (oznaczone „RFID-ready") obsługują nakładkę Zebra RFD40 UHF Sled — odczyt 100–700 tagów/sekundę z odległości do 9 m. Modele z 2-pinowym złączem łączą się z RFD40 przez Bluetooth. Wbudowany NFC (13,56 MHz) działa we wszystkich wariantach — obsługuje karty lojalnościowe, Apple VAS i Google SmartTap.',
   },
   {
-    q: 'Czym TC22 różni się od poprzedniego modelu TC21?',
-    a: 'TC22 to trzecia generacja serii TC2x zastępująca TC21. Kluczowe ulepszenia: 2× wydajniejszy procesor (Qualcomm 5430 vs 660), Wi-Fi 6E (tri-band 2,4/5/6 GHz) zamiast Wi-Fi 5, Bluetooth 5.2 (vs 5.1), kamera 16 MP (vs 13 MP), USB 3.1 Type-C (vs USB 2.0), obudowa o 10% cieńsza, wsparcie do Android 16 (vs Android 13). Wszystkie akcesoria TC22 są nowe — brak kompatybilności wstecznej z TC21.',
-  },
-  {
     q: 'Ile kosztuje Zebra TC22 vs Honeywell CT32?',
     a: 'Zebra TC22 zaczyna się od 2 417 zł netto — Honeywell CT32 od 3 389 zł netto. CT32 jest o 40% droższy, ale oferuje dłuższą ścieżkę Android (do v18 vs v16) i skaner FlexRange z zasięgiem 11 m. TC22 jest lżejszy (236 vs 269 g), ma większy ekosystem Mobility DNA (gratis) i najszerszą sieć serwisową Zebra w Polsce. Dla firm szukających najniższego TCO — TC22. Dla projektów z perspektywą 6+ lat — CT32 wart rozważenia.',
   },
@@ -55,7 +51,7 @@ const faqs = [
   },
   {
     q: 'Gdzie serwisować Zebra TC22 w Polsce?',
-    a: 'Autoryzowany serwis Zebra w Polsce: TAKMA (partner od 2001 r.) oraz serwis-zebry.pl. Czas naprawy gwarancyjnej: 3–5 dni roboczych. Opcjonalne kontrakty OneCare (Z1AE-TC2L-*): Essential (naprawa 3 dni), Select (naprawa+wymiana baterii), TC Cloud (zarządzanie zdalne). TAKMA zapewnia też diagnostykę przed zakupem i pomoc przy konfiguracji floty.',
+    a: 'Autoryzowany serwis Zebra w Polsce: TAKMA oraz serwis-zebry.pl. Czas naprawy gwarancyjnej: 3–5 dni roboczych. Opcjonalne kontrakty OneCare (Z1AE-TC2L-*): Essential (naprawa 3 dni), Select (naprawa+wymiana baterii), TC Cloud (zarządzanie zdalne). TAKMA zapewnia też diagnostykę przed zakupem i pomoc przy konfiguracji floty.',
   },
   {
     q: 'Ile urządzeń TC22 mogę ładować jednocześnie?',
@@ -76,16 +72,16 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.03 }}
-      className="border-b border-gray-100 last:border-0"
+      className="border-b border-slate-200 last:border-0"
     >
       <button onClick={() => setOpen(!open)} className="w-full flex items-start justify-between gap-4 py-4 text-left group">
-        <h3 className="font-medium text-gray-900 group-hover:text-brand-700 transition-colors text-sm md:text-base">{faq.q}</h3>
-        <ChevronDown size={18} className={`text-gray-400 flex-shrink-0 mt-0.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        <h3 className="font-medium text-slate-900 group-hover:text-brand-700 transition-colors text-sm md:text-base">{faq.q}</h3>
+        <ChevronDown size={18} className={`text-slate-400 flex-shrink-0 mt-0.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
-            <p className="pb-4 text-sm text-gray-600 leading-relaxed pr-8">{faq.a}</p>
+            <p className="pb-4 text-sm text-slate-600 leading-relaxed pr-8 bg-slate-50 -mx-5 px-5 py-3 rounded-xl">{faq.a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -94,18 +90,27 @@ function FAQItem({ faq, index }: { faq: typeof faqs[0]; index: number }) {
 }
 
 export default function FAQ() {
-  return (
-    <section id="faq" className="py-16 md:py-24 bg-white">
-      <div className="max-w-3xl mx-auto px-4 md:px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Najczęściej zadawane pytania o Zebra TC22</h2>
-          <p className="text-gray-600 mb-10">15 odpowiedzi na pytania kupujących — z cenami, porównaniami i rekomendacjami. Dane aktualne na marzec 2026.</p>
-        </motion.div>
+  const [sectionOpen, setSectionOpen] = useState(false)
 
-        <div className="bg-white rounded-xl border border-gray-100 divide-y divide-gray-100 px-5">
-          {faqs.map((faq, i) => (
-            <FAQItem key={i} faq={faq} index={i} />
-          ))}
+  return (
+    <section id="faq" className="py-8 lg:py-12 bg-slate-50 border-y border-slate-200">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button onClick={() => setSectionOpen(!sectionOpen)} className="w-full flex items-center justify-between group">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            Najczęściej zadawane pytania
+          </h2>
+          <span className="flex items-center gap-1 text-sm font-semibold text-slate-900 bg-brand-500 px-4 py-1.5 rounded-full group-hover:bg-brand-400 transition-colors">
+            {sectionOpen ? 'Ukryj' : `Pokaż ${faqs.length} pytań`}
+            <ChevronDown size={18} className={`transition-transform duration-300 ${sectionOpen ? 'rotate-180' : ''}`} />
+          </span>
+        </button>
+
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${sectionOpen ? 'max-h-[5000px] opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}`}>
+          <div className="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-200 px-5">
+            {faqs.map((faq, i) => (
+              <FAQItem key={i} faq={faq} index={i} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

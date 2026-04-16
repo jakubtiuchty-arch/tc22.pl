@@ -13,6 +13,13 @@ body {
   scroll-behavior: smooth;
 }
 
+@layer base {
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #A8F000, 0 0 0 4px white;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -34,7 +41,7 @@ input[type='range']::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #0284c7;
+  background: #A8F000;
   cursor: pointer;
   border: 2px solid white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);
@@ -44,7 +51,7 @@ input[type='range']::-moz-range-thumb {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #0284c7;
+  background: #A8F000;
   cursor: pointer;
   border: 2px solid white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);

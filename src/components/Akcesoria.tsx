@@ -1,55 +1,82 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Battery, Dock, Shield, Grip, Cable, ExternalLink } from 'lucide-react'
+import Image from 'next/image'
+import { Plus, Check } from 'lucide-react'
+import { useState } from 'react'
 
 const accessories = [
-  { icon: Battery, name: 'Bateria 3 800 mAh', pn: 'BTRY-TC2L-2XMAXX-01', desc: 'Standardowa bateria wymienna hot-swap, ~10 h pracy', link: 'zebra-battery-tc2-standard' },
-  { icon: Battery, name: 'Bateria 5 200 mAh', pn: 'BTRY-TC2L-3XMAXX-01', desc: 'Rozszerzona bateria, ~14 h pracy, ten sam rozmiar etui', link: 'zebra-battery-tc2-extended' },
-  { icon: Shield, name: 'Etui ochronne (boot)', pn: 'SG-TC2L-BOOT-01', desc: 'Gumowy bumper, zwiększa odporność na upadki z 1,5 do 1,8 m', link: 'zebra-boot-tc2' },
-  { icon: Grip, name: 'Trigger handle', pn: 'TRG-TC2L-SNP1-01', desc: 'Rękojeść pistoletowa do intensywnego skanowania, snap-on', link: 'zebra-trigger-tc2' },
-  { icon: Dock, name: 'Stacja ładowania 1-slot', pn: 'CRD-TC2L-BS1CO-01', desc: 'Ładowanie + USB/Ethernet, do biurka lub regału', link: 'zebra-cradle-tc2-1slot' },
-  { icon: Dock, name: 'Stacja ładowania 5-slot', pn: 'CRD-TC2L-BS5CO-01', desc: '5 urządzeń jednocześnie, z Ethernet do każdego slotu', link: 'zebra-cradle-tc2-5slot' },
-  { icon: Battery, name: 'Ładowarka 4 baterii', pn: 'SAC-TC2L-4SCHG-01', desc: '4 baterie naraz, LED status per slot', link: 'zebra-charger-tc2-4battery' },
-  { icon: Cable, name: 'Zasilacz 50 W', pn: 'PWR-BGA12V50W0WW', desc: 'Do stacji 1-slot i ładowarki 4 baterii', link: 'zebra-psu-50w' },
+  { pn: 'BTRY-TC2L-2XMAXX-01', name: 'Akumulator 3800 mAh', desc: 'Bateria standardowa hot-swap, ~10 h pracy', price: 270, image: '/images/BTRY-TC2L-2XMAXX-01.png', available: true },
+  { pn: 'BTRY-TC2L-3XMAXX-01', name: 'Akumulator 5200 mAh', desc: 'Bateria rozszerzona hot-swap, ~14 h pracy', price: 401, image: '/images/BTRY-TC2L-3XMAXX-01.png', available: false },
+  { pn: 'SG-TC2L-BOOT-01', name: 'Etui ochronne (boot)', desc: 'Gumowy bumper, upadki do 1,8 m', price: 175, image: '/images/SG-TC2L-BOOT-01.png', available: true },
+  { pn: 'TRG-TC2L-SNP1-01', name: 'Trigger handle', desc: 'Rękojeść pistoletowa do skanowania', price: 818, image: '/images/TRG-TC2L-SNP1-01.png', available: true },
 ]
+
+function formatPrice(n: number) {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+}
+
+function AccessoryCard({ acc }: { acc: typeof accessories[0] }) {
+  const [added, setAdded] = useState(false)
+
+  function handleAdd() {
+    setAdded(true)
+    window.dispatchEvent(new CustomEvent('addAccessory', { detail: acc.pn }))
+  }
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-col shadow-sm hover:shadow-md transition-shadow">
+      <div className="bg-white rounded-xl p-4 mb-3 flex items-center justify-center h-40">
+        <Image src={acc.image} alt={acc.name} width={160} height={160} className="object-contain h-32 w-auto" />
+      </div>
+
+      <p className="text-xs text-slate-400 uppercase tracking-wider font-medium">Zebra</p>
+      <h3 className="font-bold text-slate-900 text-sm mb-1">{acc.name}</h3>
+
+      {acc.available ? (
+        <span className="text-xs text-emerald-600 font-medium border border-emerald-200 bg-emerald-50 rounded-full px-2 py-0.5 w-fit mb-3">Dostępny</span>
+      ) : (
+        <span className="text-xs text-amber-600 font-medium border border-amber-200 bg-amber-50 rounded-full px-2 py-0.5 w-fit mb-3">Na zamówienie</span>
+      )}
+
+      <div className="mt-auto">
+        <div className="flex gap-2">
+          <button
+            onClick={handleAdd}
+            disabled={added}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+              added
+                ? 'bg-emerald-100 text-emerald-700 cursor-default'
+                : 'bg-brand-500 text-slate-900 hover:bg-brand-400 hover:-translate-y-0.5'
+            }`}
+          >
+            {added ? <><Check size={16} /> Dodano</> : <><Plus size={16} /> Dodaj do zapytania</>}
+          </button>
+        </div>
+
+        <p className="text-[10px] text-slate-400 font-mono mt-2 text-center">{acc.pn}</p>
+      </div>
+    </div>
+  )
+}
 
 export default function Akcesoria() {
   return (
-    <section id="akcesoria" className="py-16 md:py-24 bg-brand-50/50">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Akcesoria do Zebra TC22</h2>
-          <p className="text-gray-600 mb-10 max-w-3xl">Najważniejsze akcesoria z ekosystemu Zebra — pełna kompatybilność z TC22 i TC27. Wszystkie dostępne w <a href="https://takma.com.pl/terminale-mobilne" target="_blank" rel="noopener" className="text-brand-600 hover:underline">sklepie takma.com.pl</a>.</p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {accessories.map((a, i) => (
-            <motion.a
-              key={a.pn}
-              href={`https://takma.com.pl/produkt/${a.link}`}
-              target="_blank"
-              rel="noopener"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="bg-white rounded-xl border border-gray-100 p-4 hover:border-brand-200 hover:shadow-sm transition-all group"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <a.icon size={20} className="text-brand-600" />
-                <ExternalLink size={14} className="text-gray-300 group-hover:text-brand-400 transition-colors" />
-              </div>
-              <h3 className="font-semibold text-gray-900 text-sm mb-1">{a.name}</h3>
-              <p className="text-xs text-gray-400 font-mono mb-2">{a.pn}</p>
-              <p className="text-xs text-gray-500 leading-relaxed">{a.desc}</p>
-            </motion.a>
-          ))}
+    <section id="akcesoria" className="py-8 lg:py-16 bg-slate-50 border-y border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-6 lg:mb-12">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">
+            Akcesoria do Zebra TC22
+          </motion.h2>
         </div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="mt-6 text-center text-sm text-gray-500">
-          Pełna lista 18 akcesoriów z cenami → <a href="https://takma.com.pl/produkt/zebra-tc22" target="_blank" rel="noopener" className="text-brand-600 hover:underline">takma.com.pl/produkt/zebra-tc22</a>
-        </motion.p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {accessories.map((acc, i) => (
+            <motion.div key={acc.pn} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }}>
+              <AccessoryCard acc={acc} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )

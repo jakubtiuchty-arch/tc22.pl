@@ -1,39 +1,49 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Monitor, Wifi, ScanBarcode, Shield, Smartphone, BatteryCharging } from 'lucide-react'
+import { Wifi, ScanBarcode, Shield, BatteryCharging } from 'lucide-react'
 
 const features = [
-  { icon: Monitor, title: 'Ekran 6" FHD+', stat: '1080×2160', desc: 'Gorilla Glass, 450 nitów jasności, dotyk w rękawiczkach i deszczu. O 10% cieńsza obudowa niż TC21.' },
-  { icon: Wifi, title: 'Wi-Fi 6E', stat: '2,4 Gbps', desc: 'Tri-band 2,4/5/6 GHz, 2×2 MU-MIMO. Stabilne połączenie w gęstych sieciach magazynowych z 50+ urządzeniami.' },
-  { icon: ScanBarcode, title: 'Skaner SE55', stat: 'do 7,6 m', desc: 'Advanced Range z zieloną kropką. Skanuje kody na regałach do 7,6 m bez drabiny. Dekodowanie w 0,3 s.' },
-  { icon: Shield, title: 'IP68 + MIL-STD', stat: '1,5 m drop', desc: 'Pyłoszczelny + zanurzenie 1 m/30 min. Upadki z 1,5 m na beton. 500 tumble. Temp. -10°C do +50°C.' },
-  { icon: Smartphone, title: 'Android do v16', stat: '3 generacje OS', desc: 'Gwarancja aktualizacji + LifeGuard security patches. Mobility DNA: DataWedge, StageNow, Device Tracker — gratis.' },
-  { icon: BatteryCharging, title: 'Hot-swap bateria', stat: '5 s wymiany', desc: 'Wymiana baterii bez wyłączania urządzenia. Standard 3 800 mAh (~10 h) lub rozszerzona 5 200 mAh (~14 h).' },
+  { id: '01', icon: Wifi, title: 'Wi-Fi 6E', stat: '2,4 Gbps', desc: 'Tri-band 2,4/5/6 GHz, 2×2 MU-MIMO. Stabilne połączenie w gęstych sieciach z 50+ urządzeniami.' },
+  { id: '02', icon: ScanBarcode, title: 'Skaner SE55', stat: 'do 7,6 m', desc: 'Advanced Range z zieloną kropką. Skanuje kody na regałach do 7,6 m bez drabiny.' },
+  { id: '03', icon: Shield, title: 'IP68 + MIL-STD', stat: '1,5 m drop', desc: 'Pyłoszczelny, zanurzenie 1 m/30 min. Upadki z 1,5 m na beton. -10°C do +50°C.' },
+  { id: '04', icon: BatteryCharging, title: 'Hot-swap bateria', stat: '5 s wymiany', desc: 'Wymiana bez wyłączania. 3 800 mAh (~10 h) lub 5 200 mAh (~14 h).' },
 ]
 
 export default function Przewagi() {
   return (
-    <section id="przewagi" className="py-16 md:py-24 bg-brand-50/50">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">6 przewag Zebra TC22</h2>
-          <p className="text-gray-600 mb-10 max-w-2xl">Dlaczego TC22 zastąpił ponad milion urządzeń TC21 na całym świecie? Oto kluczowe ulepszenia trzeciej generacji serii TC2x.</p>
-        </motion.div>
+    <section id="przewagi" className="py-8 lg:py-16 bg-slate-900 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-6 lg:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+            Kluczowe parametry Zebra TC22
+          </h2>
+        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
           {features.map((f, i) => (
-            <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }} className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center">
-                  <f.icon size={20} className="text-brand-700" />
+            <motion.div
+              key={f.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.7, delay: i * 0.15 }}
+              className="relative group text-center"
+            >
+              {/* Icon in circle */}
+              <div className="relative inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-brand-500/30 mb-5 group-hover:border-brand-500 transition-all duration-300">
+                <div className="w-11 h-11 sm:w-14 sm:h-14 bg-brand-500/10 rounded-full flex items-center justify-center group-hover:bg-brand-500/20 transition-colors">
+                  <f.icon size={24} className="text-brand-500" />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">{f.title}</h3>
-                  <span className="text-xs font-bold text-brand-600">{f.stat}</span>
+                {/* Number badge */}
+                <div className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 bg-brand-500 rounded-full flex items-center justify-center text-slate-900 font-bold text-xs shadow-md">
+                  {f.id}
                 </div>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
+
+              <h3 className="text-lg font-bold text-white mb-1">{f.title}</h3>
+              <span className="text-sm font-bold text-brand-500 block mb-2">{f.stat}</span>
+              <p className="text-slate-400 leading-relaxed text-sm">{f.desc}</p>
             </motion.div>
           ))}
         </div>

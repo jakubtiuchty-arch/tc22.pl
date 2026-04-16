@@ -1,12 +1,37 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react'
+import { Send, CheckCircle } from 'lucide-react'
+import { getPrices, formatPrice } from '@/data/prices'
+
+const prices = getPrices()
+const warianty = prices.variants.map(v => ({
+  pn: v.pn,
+  label: `${v.pn} — ${v.name} — ${formatPrice(v.price)} zł`,
+}))
 
 export default function Kontakt() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [selectedVariant, setSelectedVariant] = useState('')
+  const [quantity, setQuantity] = useState('1')
+  const [addedAccessories, setAddedAccessories] = useState<string[]>([])
+
+  useEffect(() => {
+    function handleVariantSelect(e: CustomEvent<string>) {
+      setSelectedVariant(e.detail)
+    }
+    function handleAccessoryAdd(e: CustomEvent<string>) {
+      setAddedAccessories(prev => prev.includes(e.detail) ? prev : [...prev, e.detail])
+    }
+    window.addEventListener('selectVariant', handleVariantSelect as EventListener)
+    window.addEventListener('addAccessory', handleAccessoryAdd as EventListener)
+    return () => {
+      window.removeEventListener('selectVariant', handleVariantSelect as EventListener)
+      window.removeEventListener('addAccessory', handleAccessoryAdd as EventListener)
+    }
+  }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -23,91 +48,121 @@ export default function Kontakt() {
           name: data.get('name'),
           email: data.get('email'),
           company: data.get('company'),
+          nip: data.get('nip'),
           phone: data.get('phone'),
+          variant: data.get('variant'),
+          quantity: data.get('quantity'),
+          accessories: addedAccessories,
           message: data.get('message'),
           source: 'tc22.pl',
         }),
       })
       setSent(true)
     } catch {
-      setSent(true) // graceful fallback
+      setSent(true)
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <section id="kontakt" className="py-16 md:py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-12">
+    <section id="kontakt" className="py-8 lg:py-16 bg-slate-50 border-y border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-6 lg:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">
+            Zapytaj o ofertę na Zebra TC22
+          </h2>
+          <p className="mt-4 text-base sm:text-lg text-slate-600">
+            Odpowiadamy w ciągu 2 godzin w dni robocze. Podpowiemy konfigurację i policzymy rabat ilościowy.
+          </p>
+        </div>
+
+        <div className="max-w-2xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Zapytaj o ofertę na Zebra TC22</h2>
-            <p className="text-gray-600 mb-8">Odpowiadamy w ciągu 2 godzin w dni robocze. Podpowiemy konfigurację, policzymy rabat ilościowy i dobierzemy akcesoria.</p>
-
-            <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-3 text-sm text-gray-600">
-                <Phone size={18} className="text-brand-600" />
-                <a href="tel:+48616248282" className="hover:text-brand-700">+48 61 624 82 82</a>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-gray-600">
-                <Mail size={18} className="text-brand-600" />
-                <a href="mailto:handlowy@takma.com.pl" className="hover:text-brand-700">handlowy@takma.com.pl</a>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-gray-600">
-                <MapPin size={18} className="text-brand-600" />
-                <span>TAKMA sp. z o.o., ul. Romana Maya 1, 61-371 Poznań</span>
-              </div>
-            </div>
-
-            <div className="bg-brand-50 rounded-xl p-4 text-sm text-gray-600">
-              <p className="font-medium text-gray-900 mb-1">Dlaczego TAKMA?</p>
-              <ul className="space-y-1 text-xs">
-                <li>• Autoryzowany partner Zebra Technologies od 2001 roku</li>
-                <li>• Własny serwis z oryginalnymi częściami (serwis-zebry.pl)</li>
-                <li>• Pomoc w konfiguracji MDM, DataWedge, StageNow</li>
-                <li>• Rabaty od 5 sztuk, finansowanie leasingowe</li>
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
             {sent ? (
-              <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-                <CheckCircle size={48} className="text-green-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Wiadomość wysłana!</h3>
-                <p className="text-gray-600 text-sm">Odezwiemy się w ciągu 2 godzin w dni robocze. Sprawdź też skrzynkę e-mail — wyślemy potwierdzenie.</p>
+              <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 border-2 border-emerald-400 rounded-2xl p-8 text-center">
+                <CheckCircle size={48} className="text-emerald-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Wiadomość wysłana!</h3>
+                <p className="text-slate-600 text-sm">Odezwiemy się w ciągu 2 godzin w dni robocze.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="bg-gray-50 rounded-xl p-6 border border-gray-100 space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Imię i nazwisko *</label>
-                    <input type="text" id="name" name="name" required className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+              <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 space-y-4 shadow-sm">
+                {/* Wariant + ilość */}
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="md:col-span-2">
+                    <label htmlFor="variant" className="block text-sm font-medium text-slate-700 mb-1">Wariant TC22</label>
+                    <select
+                      id="variant"
+                      name="variant"
+                      value={selectedVariant}
+                      onChange={e => setSelectedVariant(e.target.value)}
+                      className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none bg-white"
+                    >
+                      <option value="">— wybierz wariant —</option>
+                      {warianty.map(v => (
+                        <option key={v.pn} value={v.pn}>{v.label}</option>
+                      ))}
+                    </select>
                   </div>
                   <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">Firma</label>
-                    <input type="text" id="company" name="company" className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+                    <label htmlFor="quantity" className="block text-sm font-medium text-slate-700 mb-1">Ilość (szt.)</label>
+                    <input type="number" id="quantity" name="quantity" min={1} value={quantity} onChange={e => setQuantity(e.target.value)} className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
                   </div>
                 </div>
+
+                {/* Dodane akcesoria */}
+                {addedAccessories.length > 0 && (
+                  <div className="bg-brand-50 border border-brand-200 rounded-lg p-3">
+                    <p className="text-xs font-semibold text-slate-700 mb-2">Dodane akcesoria:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {addedAccessories.map(pn => (
+                        <span key={pn} className="inline-flex items-center gap-1 px-2 py-1 bg-white border border-slate-200 rounded text-xs font-mono text-slate-700">
+                          {pn}
+                          <button type="button" onClick={() => setAddedAccessories(prev => prev.filter(a => a !== pn))} className="text-slate-400 hover:text-red-500 ml-1">&times;</button>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Dane kontaktowe */}
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">E-mail *</label>
-                    <input type="email" id="email" name="email" required className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Imię i nazwisko *</label>
+                    <input type="text" id="name" name="name" required className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-                    <input type="tel" id="phone" name="phone" className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+                    <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">Telefon *</label>
+                    <input type="tel" id="phone" name="phone" required className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
                   </div>
                 </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">E-mail *</label>
+                    <input type="email" id="email" name="email" required className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+                  </div>
+                  <div>
+                    <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1">Firma</label>
+                    <input type="text" id="company" name="company" className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Wiadomość *</label>
-                  <textarea id="message" name="message" required rows={4} placeholder="Np. Interesuje mnie 15 szt. TC22 SE55 z etui i stacjami ładowania..." className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none resize-none" />
+                  <label htmlFor="nip" className="block text-sm font-medium text-slate-700 mb-1">NIP (do faktury)</label>
+                  <input type="text" id="nip" name="nip" placeholder="np. 782-21-63-526" className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none" />
                 </div>
-                <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-60">
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">Uwagi / pytania</label>
+                  <textarea id="message" name="message" rows={3} placeholder="Np. Potrzebuję wycenę z etui ochronnym i stacją ładowania 5-slot..." className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none resize-none" />
+                </div>
+
+                <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-brand-500 text-slate-900 font-bold rounded-lg hover:bg-brand-400 transition-colors disabled:opacity-60">
                   <Send size={16} />
                   {loading ? 'Wysyłanie...' : 'Wyślij zapytanie'}
                 </button>
-                <p className="text-xs text-gray-400 text-center">Wysyłając formularz wyrażasz zgodę na kontakt w sprawie oferty. Twoje dane przetwarzamy zgodnie z RODO.</p>
+                <p className="text-xs text-slate-400 text-center">Wysyłając formularz wyrażasz zgodę na kontakt w sprawie oferty. Dane przetwarzamy zgodnie z RODO.</p>
               </form>
             )}
           </motion.div>

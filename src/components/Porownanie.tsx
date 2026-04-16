@@ -1,65 +1,69 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Check, X, Minus } from 'lucide-react'
+import { useState } from 'react'
+import { Check, X, ChevronDown } from 'lucide-react'
 
 const models = [
-  { name: 'Zebra TC22', highlight: true, specs: { 'Łączność': 'Wi-Fi 6/6E', 'Procesor': 'Qualcomm 5430, 2.1 GHz', 'Ekran': '6" FHD+ (1080×2160)', 'Skaner': 'SE4710 lub SE55 (7,6 m)', 'IP': 'IP68/IP65', 'Upadki': '1,5 m na beton', 'Bateria': '3 800 / 5 200 mAh', 'Hot-swap': true, 'RAM / Flash': '6/64 lub 8/128 GB', 'Android': 'Do Android 16', 'NFC': true, '5G/GPS': false, 'RFID': 'Opcja (RFD40 sled)', 'Waga': '236 g', 'Cena od': '2 417 zł', 'Mobility DNA': true } },
-  { name: 'Zebra TC27', highlight: false, specs: { 'Łączność': 'Wi-Fi 6/6E + 5G + GPS', 'Procesor': 'Qualcomm 5430, 2.1 GHz', 'Ekran': '6" FHD+ (1080×2160)', 'Skaner': 'SE4710 lub SE55 (7,6 m)', 'IP': 'IP68/IP65', 'Upadki': '1,5 m na beton', 'Bateria': '3 800 / 5 200 mAh', 'Hot-swap': true, 'RAM / Flash': '6/64 lub 8/128 GB', 'Android': 'Do Android 16', 'NFC': true, '5G/GPS': true, 'RFID': 'Opcja (RFD40 sled)', 'Waga': '248 g', 'Cena od': '3 254 zł', 'Mobility DNA': true } },
-  { name: 'Honeywell CT32', highlight: false, specs: { 'Łączność': 'Wi-Fi 6E', 'Procesor': 'QCS4490, 2.4 GHz', 'Ekran': '6" FHD (1080×2160)', 'Skaner': 'S0703 lub FlexRange (11 m)', 'IP': 'IP65/IP68', 'Upadki': '1,8 m (z bootem)', 'Bateria': '4 500 mAh', 'Hot-swap': true, 'RAM / Flash': '6/128 lub 8/128 GB', 'Android': 'Do Android 18', 'NFC': true, '5G/GPS': 'Opcja (X1N)', 'RFID': 'Brak', 'Waga': '269 g', 'Cena od': '3 389 zł', 'Mobility DNA': false } },
-  { name: 'Zebra TC53e', highlight: false, specs: { 'Łączność': 'Wi-Fi 6E', 'Procesor': 'QCS4490, 2.4 GHz', 'Ekran': '6" FHD+ (1080×2160)', 'Skaner': 'SE4720 lub SE55', 'IP': 'IP68/IP65', 'Upadki': '1,5 m na beton', 'Bateria': '4 680 / 7 000 mAh', 'Hot-swap': true, 'RAM / Flash': '6/64 lub 8/128 GB', 'Android': 'Do Android 17', 'NFC': true, '5G/GPS': false, 'RFID': 'Opcja (RFD40)', 'Waga': '291 g', 'Cena od': '~4 500 zł', 'Mobility DNA': true } },
+  { name: 'Zebra TC22', link: '#warianty', highlight: true, specs: { 'Cena od': 'od 2 673 zł', 'Skaner': 'SE4710 / SE55 (7,6 m)', 'Ekran': '6" FHD+ (1080×2160)', 'Procesor': 'Qualcomm 5430, 2.1 GHz', 'RAM / Flash': '6/64 lub 8/128 GB', 'Bateria': '3 800 / 5 200 mAh', 'Hot-swap': true, 'IP': 'IP68/IP65', 'Upadki': '1,5 m na beton', 'Wi-Fi': 'Wi-Fi 6/6E', 'Android': 'Do v16', 'Waga': '236 g', 'Mobility DNA': true } },
+  { name: 'Datalogic Memor 12', link: 'https://www.takma.com.pl/produkt/datalogic-memor-12', highlight: false, specs: { 'Cena od': '2 687 zł', 'Skaner': 'Halogen 2D + Green Spot', 'Ekran': '6" FHD+ (1080×2160)', 'Procesor': 'QCx4490, 2.4 GHz', 'RAM / Flash': '6/64 GB', 'Bateria': '4 000 mAh', 'Hot-swap': true, 'IP': 'IP65/IP67', 'Upadki': '1,3 m (1,5 m z boot)', 'Wi-Fi': 'Wi-Fi 6/6E', 'Android': 'Do v18', 'Waga': '245 g', 'Mobility DNA': false } },
+  { name: 'M3 SM24', link: 'https://www.takma.com.pl/produkt/m3-sm24', highlight: false, specs: { 'Cena od': '3 123 zł', 'Skaner': 'CM60E 2D', 'Ekran': '6" HD+ (720×1440)', 'Procesor': 'SM6225, 2.4 GHz', 'RAM / Flash': '8/128 GB', 'Bateria': '4 000 / 6 000 mAh', 'Hot-swap': true, 'IP': 'IP67', 'Upadki': '1,5 m (1,8 m z boot)', 'Wi-Fi': 'Wi-Fi 6E', 'Android': 'Do v18', 'Waga': '240 g', 'Mobility DNA': false } },
+  { name: 'Honeywell CT32', link: 'https://www.takma.com.pl/produkt/honeywell-ct32', highlight: false, specs: { 'Cena od': '3 389 zł', 'Skaner': 'FlexRange (do 11 m)', 'Ekran': '6" FHD (1080×2160)', 'Procesor': 'QCS4490, 2.4 GHz', 'RAM / Flash': '6/128 lub 8/128 GB', 'Bateria': '4 500 mAh', 'Hot-swap': true, 'IP': 'IP65/IP68', 'Upadki': '1,8 m (z boot)', 'Wi-Fi': 'Wi-Fi 6E', 'Android': 'Do v18', 'Waga': '269 g', 'Mobility DNA': false } },
 ]
 
-const rows = ['Łączność', 'Procesor', 'Ekran', 'Skaner', 'IP', 'Upadki', 'Bateria', 'Hot-swap', 'RAM / Flash', 'Android', 'NFC', '5G/GPS', 'RFID', 'Waga', 'Cena od', 'Mobility DNA'] as const
+const rows = ['Cena od', 'Skaner', 'Ekran', 'RAM / Flash', 'Bateria', 'Hot-swap', 'IP', 'Upadki', 'Android', 'Waga', 'Mobility DNA'] as const
 
 function CellValue({ val }: { val: string | boolean }) {
-  if (val === true) return <Check size={16} className="text-green-600 mx-auto" />
-  if (val === false) return <X size={16} className="text-gray-300 mx-auto" />
-  if (val === 'Brak') return <Minus size={16} className="text-gray-300 mx-auto" />
+  if (val === true) return <Check size={14} className="text-emerald-500 mx-auto" />
+  if (val === false) return <X size={14} className="text-slate-300 mx-auto" />
   return <span>{val as string}</span>
 }
 
 export default function Porownanie() {
+  const [open, setOpen] = useState(false)
+
   return (
-    <section id="porownanie" className="py-16 md:py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Zebra TC22 vs TC27 vs CT32 vs TC53e</h2>
-          <p className="text-gray-600 mb-8 max-w-3xl">Jedyne takie porównanie w Polsce. Zebra TC22 na tle głównych konkurentów w segmencie terminali mobilnych 6&quot; — z cenami netto i kluczowymi parametrami.</p>
-        </motion.div>
+    <section id="porownanie" className="py-8 lg:py-12 bg-white border-b border-slate-200">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between group">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            Porównanie z konkurencją
+          </h2>
+          <span className="flex items-center gap-1 text-sm font-semibold text-slate-900 bg-brand-500 px-4 py-1.5 rounded-full group-hover:bg-brand-400 transition-colors">
+            {open ? 'Ukryj' : 'Pokaż tabelę'}
+            <ChevronDown size={18} className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
+          </span>
+        </button>
 
-        {/* GEO: Comparison passage for AI citation */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="bg-brand-50 border border-brand-100 rounded-xl p-4 mb-8 text-sm text-gray-700 leading-relaxed">
-          <strong>Zebra TC22 vs TC27:</strong> Jedyna różnica to łączność — TC22 (od 2 417 zł) działa wyłącznie przez Wi-Fi 6/6E, TC27 (od 3 254 zł) dodaje 5G/LTE z dual SIM i GPS. <strong>TC22 vs Honeywell CT32:</strong> TC22 jest lżejszy (236 vs 269 g), tańszy i ma ekosystem Mobility DNA. CT32 ma dłuższą ścieżkę Android (14→18) i skaner FlexRange do 11 m. <strong>TC22 vs TC53e:</strong> TC53e to klasa wyższa — większa bateria (4 680 mAh), dłuższy Android (do v17), ale o ~85% droższa.
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse min-w-[700px]">
-            <thead>
-              <tr>
-                <th className="text-left py-3 px-3 bg-gray-50 text-gray-500 font-medium rounded-tl-lg">Parametr</th>
-                {models.map(m => (
-                  <th key={m.name} className={`py-3 px-3 text-center font-semibold ${m.highlight ? 'bg-brand-600 text-white rounded-t-lg' : 'bg-gray-50 text-gray-700'}`}>
-                    {m.name}
-                    {m.highlight && <span className="block text-[10px] font-normal opacity-80 mt-0.5">Rekomendowany</span>}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, ri) => (
-                <tr key={row} className={ri % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>
-                  <td className="py-2.5 px-3 text-gray-600 font-medium border-b border-gray-100">{row}</td>
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out ${open ? 'max-h-[800px] opacity-100 mt-6' : 'max-h-0 opacity-0 mt-0'}`}>
+          <div className="overflow-x-auto rounded-xl border border-slate-200">
+            <table className="w-full text-xs sm:text-sm border-collapse min-w-[600px]">
+              <thead>
+                <tr>
+                  <th className="text-left py-2.5 px-3 bg-slate-50 text-slate-500 font-medium" />
                   {models.map(m => (
-                    <td key={m.name + row} className={`py-2.5 px-3 text-center border-b border-gray-100 ${m.highlight ? 'bg-brand-50/50 font-medium text-gray-900' : 'text-gray-700'}`}>
-                      <CellValue val={m.specs[row as keyof typeof m.specs]} />
-                    </td>
+                    <th key={m.name} className={`py-2.5 px-3 text-center font-semibold ${m.highlight ? 'bg-brand-500 text-slate-900' : 'bg-slate-50 text-slate-700'}`}>
+                      <a href={m.link} target={m.link.startsWith('http') ? '_blank' : undefined} rel={m.link.startsWith('http') ? 'noopener' : undefined} className="hover:underline">
+                        {m.name}
+                      </a>
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </motion.div>
+              </thead>
+              <tbody>
+                {rows.map((row, ri) => (
+                  <tr key={row} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}>
+                    <td className="py-2 px-3 text-slate-600 font-medium border-b border-slate-100">{row}</td>
+                    {models.map(m => (
+                      <td key={m.name + row} className={`py-2 px-3 text-center border-b border-slate-100 ${m.highlight ? 'bg-brand-50/50 font-medium text-slate-900' : 'text-slate-700'}`}>
+                        <CellValue val={m.specs[row as keyof typeof m.specs]} />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </section>
   )

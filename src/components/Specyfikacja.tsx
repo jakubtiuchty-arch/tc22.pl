@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 
 const specs = [
   { label: 'System operacyjny', value: 'Android (aktualizacja do Android 16)' },
@@ -28,38 +27,28 @@ const specs = [
 
 export default function Specyfikacja() {
   return (
-    <section id="specyfikacja" className="py-16 md:py-24 bg-brand-50/50">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Pełna specyfikacja techniczna</h2>
-          <p className="text-gray-600 mb-10">Zebra TC22 — dane techniczne z datasheet producenta (Zebra Technologies, 2024).</p>
-        </motion.div>
+    <section id="specyfikacja" className="py-8 lg:py-16 bg-slate-50 border-y border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-6 lg:mb-12">
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">
+            Pełna specyfikacja techniczna
+          </motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="mt-4 text-base sm:text-lg text-slate-600">
+            Zebra TC22 — dane techniczne z datasheet producenta (Zebra Technologies, 2024).
+          </motion.p>
+        </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="lg:col-span-2">
-            <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+        <div className="max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
               {specs.map((s, i) => (
-                <div key={s.label} className={`flex ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/60'} ${i < specs.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                  <div className="w-[40%] py-3 px-4 text-sm font-medium text-gray-600">{s.label}</div>
-                  <div className="w-[60%] py-3 px-4 text-sm text-gray-900">{s.value}</div>
+                <div key={s.label} className={`flex flex-col sm:flex-row ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'} ${i < specs.length - 1 ? 'border-b border-slate-100' : ''}`}>
+                  <div className="w-full sm:w-[40%] py-2 sm:py-3 px-3 sm:px-4 text-xs sm:text-sm font-medium text-slate-500 sm:text-slate-600">{s.label}</div>
+                  <div className="w-full sm:w-[60%] pb-2 sm:py-3 px-3 sm:px-4 text-sm text-slate-900">{s.value}</div>
                 </div>
               ))}
             </div>
-          </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }} className="flex flex-col items-center gap-4">
-            <Image src="/images/tc22_scanner_2.png" alt="Zebra TC22 — widok z boku, profil 12,5 mm z przyciskami skanowania" width={300} height={400} className="object-contain" />
-            <div className="bg-white rounded-xl border border-gray-100 p-4 w-full">
-              <h3 className="font-semibold text-gray-900 mb-2 text-sm">Dokumentacja</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a href="https://www.serwis-zebry.pl/instrukcje/zebra-tc22/instrukcja-po-polsku" target="_blank" rel="noopener" className="text-brand-600 hover:underline">Instrukcja obsługi (PL)</a>
-                </li>
-                <li>
-                  <a href="https://www.zebra.com/us/en/support-downloads/mobile-computers/handheld/tc22-tc27.html" target="_blank" rel="noopener" className="text-brand-600 hover:underline">Datasheet Zebra (EN)</a>
-                </li>
-              </ul>
-            </div>
           </motion.div>
         </div>
       </div>

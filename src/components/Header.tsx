@@ -1,59 +1,79 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Phone, Mail } from 'lucide-react'
+import Image from 'next/image'
 
 const navLinks = [
-  { href: '#przewagi', label: 'Przewagi' },
-  { href: '#porownanie', label: 'Porownanie' },
-  { href: '#warianty', label: 'Warianty i ceny' },
-  { href: '#tco', label: 'Kalkulator TCO' },
+  { href: '#warianty', label: 'Warianty' },
+  { href: '#akcesoria', label: 'Akcesoria' },
+  { href: '#serwis', label: 'Serwis' },
   { href: '#faq', label: 'FAQ' },
-  { href: '#kontakt', label: 'Kontakt' },
 ]
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     function onScroll() {
       setScrolled(window.scrollY > 50)
-      const h = document.documentElement.scrollHeight - window.innerHeight
-      setProgress(h > 0 ? (window.scrollY / h) * 100 : 0)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'}`}>
-      <div className="h-0.5 bg-gray-100">
-        <div className="h-full bg-brand-600 transition-all duration-150" style={{ width: `${progress}%` }} />
+    <header className="sticky top-0 z-50">
+      {/* Top Bar */}
+      <div className="bg-brand-700 text-white text-xs md:text-sm py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end items-center gap-4">
+            <a href="mailto:takma@takma.com.pl" className="hover:text-brand-200 underline transition-colors">
+              takma@takma.com.pl
+            </a>
+            <a href="tel:+48601828711" className="hover:text-brand-200 underline transition-colors">
+              601 828 711
+            </a>
+        </div>
       </div>
-      <div className="max-w-6xl mx-auto px-4 md:px-6 flex items-center justify-between h-16">
-        <a href="#" className="flex items-center gap-3">
-          <span className="text-xl font-bold text-brand-700">TC22</span>
-          <span className="text-xs text-gray-400">|</span>
-          <span className="text-sm text-gray-500">TAKMA</span>
-        </a>
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map(l => (
-            <a key={l.href} href={l.href} className="text-sm text-gray-600 hover:text-brand-700 transition-colors">{l.label}</a>
-          ))}
-        </nav>
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-gray-600" aria-label="Menu">
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+
+      {/* Main Nav */}
+      <div className={`bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm transition-all duration-300`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-1.5">
+            <a href="#" className="flex items-center gap-2">
+              <Image src="/images/takma_logo.png" alt="TAKMA — Centrum Systemów Mobilnych" width={120} height={36} className="h-16 w-auto" />
+            </a>
+
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-6">
+              {navLinks.map(l => (
+                <a key={l.href} href={l.href} className="text-slate-700 hover:text-slate-900 transition-colors text-sm font-medium">{l.label}</a>
+              ))}
+              <a href="#kontakt" className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-brand-500 text-slate-900 hover:bg-brand-400 text-sm font-bold transition-colors">
+                Zapytaj o ofertę
+              </a>
+            </nav>
+
+            {/* Mobile */}
+            <button onClick={() => setOpen(!open)} className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border border-slate-300 text-slate-700" aria-label="Menu">
+              {open ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
       </div>
-      {open && (
-        <nav className="md:hidden bg-white border-t border-gray-100 px-4 pb-4">
+
+      {/* Mobile Nav */}
+      <div className={`md:hidden border-t border-slate-200 bg-white overflow-hidden transition-all duration-300 ease-in-out ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid gap-3">
           {navLinks.map(l => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="block py-3 text-sm text-gray-600 hover:text-brand-700 border-b border-gray-50">{l.label}</a>
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="py-2 text-slate-700 font-medium block">{l.label}</a>
           ))}
-        </nav>
-      )}
+          <a href="#kontakt" onClick={() => setOpen(false)} className="inline-flex justify-center px-4 py-2 rounded-md bg-brand-500 text-slate-900 hover:bg-brand-400 font-bold transition-colors">
+            Zapytaj o ofertę
+          </a>
+        </div>
+      </div>
     </header>
   )
 }

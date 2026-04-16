@@ -4,8 +4,8 @@ import DlaKogo from '@/components/DlaKogo'
 import Przewagi from '@/components/Przewagi'
 import Porownanie from '@/components/Porownanie'
 import Warianty from '@/components/Warianty'
+import BonusSection from '@/components/BonusSection'
 import Specyfikacja from '@/components/Specyfikacja'
-import TCOKalkulator from '@/components/TCOKalkulator'
 import Akcesoria from '@/components/Akcesoria'
 import FAQ from '@/components/FAQ'
 import Serwis from '@/components/Serwis'
@@ -22,12 +22,12 @@ export default function Home() {
         <Przewagi />
         <Porownanie />
         <Warianty />
-        <Specyfikacja />
-        <TCOKalkulator />
+        <BonusSection />
         <Akcesoria />
-        <FAQ />
+        <Specyfikacja />
         <Serwis />
         <Kontakt />
+        <FAQ />
       </main>
       <Footer />
     </>

@@ -1,10 +1,10 @@
 # tc22.pl — Zebra TC22 terminal mobilny
 
-> Strona produktowa terminala mobilnego Zebra TC22, prowadzona przez TAKMA sp. z o.o. (autoryzowany partner Zebra Technologies od 2001 r.)
+> Strona produktowa terminala mobilnego Zebra TC22, prowadzona przez TAKMA (autoryzowany partner Zebra Technologies od 2001 r.)
 
 ## Zebra TC22 — podstawowe informacje
 
-Zebra TC22 to wytrzymały terminal mobilny klasy enterprise z ekranem 6" FHD+ (1080×2160) i procesorem Qualcomm 5430 2,1 GHz. Następca modelu TC21 (trzecia generacja serii TC2x).
+Zebra TC22 to wytrzymały terminal mobilny klasy enterprise z ekranem 6" FHD+ (1080×2160) i procesorem Qualcomm 5430 2,1 GHz.
 
 ### Ceny netto PLN (marzec 2026)
 
@@ -34,7 +34,7 @@ Jedyna różnica: TC22 = Wi-Fi only, TC27 = Wi-Fi + 5G/LTE + GPS. TC27 od 3 254 
 ### TC22 vs Honeywell CT32
 TC22 od 2 417 zł, CT32 od 3 389 zł. TC22 lżejszy (236 vs 269 g), Mobility DNA gratis. CT32 ma Android do v18 i FlexRange 11 m.
 
-### Dystrybutor
-TAKMA sp. z o.o., ul. Romana Maya 1, 61-371 Poznań
+### Autoryzowany partner Zebra
+TAKMA, ul. Romana Maya 1, 61-371 Poznań
 Tel: +48 61 624 82 82, e-mail: handlowy@takma.com.pl
 Strona: https://takma.com.pl | Serwis: https://www.serwis-zebry.pl
