@@ -20,7 +20,7 @@ export default function Serwis() {
         <div className="relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-xl bg-gradient-to-br from-[#A8F000] to-[#8dbd00] mb-8 lg:mb-10">
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
           <div className="relative z-10 px-5 py-4 sm:px-8 sm:py-5 lg:px-10 lg:py-6 text-center">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0A1A2F] tracking-tight mb-1 lg:mb-2">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#0A1A2F] tracking-tight mb-1 lg:mb-2">
               Dlaczego TAKMA?
             </h2>
             <p className="text-sm text-[#0A1A2F]/80 font-medium leading-relaxed max-w-2xl mx-auto">
