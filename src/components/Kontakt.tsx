@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Send, CheckCircle } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Send, CheckCircle, X, Clock } from 'lucide-react'
 import { getPrices, formatPrice } from '@/data/prices'
 
 const prices = getPrices()
@@ -41,7 +41,7 @@ export default function Kontakt() {
     const data = new FormData(form)
 
     try {
-      await fetch('https://takma.com.pl/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -57,6 +57,7 @@ export default function Kontakt() {
           source: 'tc22.pl',
         }),
       })
+      if (!res.ok) throw new Error('send failed')
       setSent(true)
     } catch {
       setSent(true)
@@ -79,14 +80,7 @@ export default function Kontakt() {
 
         <div className="max-w-2xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            {sent ? (
-              <div className="bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 border-2 border-emerald-400 rounded-2xl p-8 text-center">
-                <CheckCircle size={48} className="text-emerald-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Wiadomość wysłana!</h3>
-                <p className="text-slate-600 text-sm">Odezwiemy się w ciągu 2 godzin w dni robocze.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 space-y-4 shadow-sm">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 space-y-4 shadow-sm">
                 {/* Wariant + ilość */}
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="md:col-span-2">
@@ -163,11 +157,62 @@ export default function Kontakt() {
                   {loading ? 'Wysyłanie...' : 'Wyślij zapytanie'}
                 </button>
                 <p className="text-xs text-slate-400 text-center">Wysyłając formularz wyrażasz zgodę na kontakt w sprawie oferty. Dane przetwarzamy zgodnie z RODO.</p>
-              </form>
-            )}
+            </form>
           </motion.div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {sent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+            onClick={() => setSent(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+              onClick={e => e.stopPropagation()}
+              className="relative bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center"
+            >
+              <button
+                type="button"
+                onClick={() => setSent(false)}
+                aria-label="Zamknij"
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 transition-colors"
+              >
+                <X size={20} />
+              </button>
+
+              <div className="mx-auto mb-5 w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center shadow-lg shadow-emerald-200">
+                <CheckCircle className="w-9 h-9 text-white" strokeWidth={2.5} />
+              </div>
+
+              <h3 className="text-2xl font-bold text-slate-900 mb-3">Dziękujemy za zapytanie!</h3>
+              <p className="text-slate-600 leading-relaxed mb-5">
+                Przygotowujemy dla Ciebie ofertę i wrócimy z odpowiedzią <strong className="text-slate-900">w ciągu maksymalnie 2 godzin</strong> w dni robocze (pon–pt, 7:30–15:30).
+              </p>
+
+              <div className="flex items-center justify-center gap-2 text-xs text-slate-500 bg-slate-50 rounded-full px-4 py-2 mb-5 w-fit mx-auto">
+                <Clock size={14} className="text-brand-700" />
+                <span>Średni czas odpowiedzi: ~45 min</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSent(false)}
+                className="inline-flex items-center justify-center px-6 py-2.5 bg-brand-500 text-slate-900 font-bold rounded-full hover:bg-brand-400 transition-colors"
+              >
+                Zamknij
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
