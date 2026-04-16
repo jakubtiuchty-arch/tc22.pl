@@ -3,6 +3,11 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { CheckCircle, ArrowRight } from 'lucide-react'
+import { getPrices } from '@/data/prices'
+
+const prices = getPrices()
+const lowPrice = Math.round(Math.min(...prices.variants.map(v => v.price)))
+const formatPLN = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
 export default function Hero() {
   return (
@@ -30,7 +35,7 @@ export default function Hero() {
             Terminal mobilny{' '}
             <span className="text-brand-500 block sm:inline">Zebra TC22</span>
             <span className="block text-xl sm:text-2xl mt-3 font-normal text-slate-300">
-              Wi-Fi 6E, skaner 1D/2D, IP68 — od 2 417 zł netto
+              Wi-Fi 6E, skaner 1D/2D, IP68 — od {formatPLN(lowPrice)} zł netto
             </span>
           </motion.h1>
 

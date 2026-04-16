@@ -2,9 +2,13 @@
 
 import { useState } from 'react'
 import { Check, X, ChevronDown } from 'lucide-react'
+import { getPrices } from '@/data/prices'
+
+const _low = Math.round(Math.min(...getPrices().variants.map(v => v.price)))
+const _fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
 const models = [
-  { name: 'Zebra TC22', link: '#warianty', highlight: true, specs: { 'Cena od': 'od 2 673 zł', 'Skaner': 'SE4710 / SE55 (7,6 m)', 'Ekran': '6" FHD+ (1080×2160)', 'Procesor': 'Qualcomm 5430, 2.1 GHz', 'RAM / Flash': '6/64 lub 8/128 GB', 'Bateria': '3 800 / 5 200 mAh', 'Hot-swap': true, 'IP': 'IP68/IP65', 'Upadki': '1,5 m na beton', 'Wi-Fi': 'Wi-Fi 6/6E', 'Android': 'Do v16', 'Waga': '236 g', 'Mobility DNA': true } },
+  { name: 'Zebra TC22', link: '#warianty', highlight: true, specs: { 'Cena od': `od ${_fmt(_low)} zł`, 'Skaner': 'SE4710 / SE55 (7,6 m)', 'Ekran': '6" FHD+ (1080×2160)', 'Procesor': 'Qualcomm 5430, 2.1 GHz', 'RAM / Flash': '6/64 lub 8/128 GB', 'Bateria': '3 800 / 5 200 mAh', 'Hot-swap': true, 'IP': 'IP68/IP65', 'Upadki': '1,5 m na beton', 'Wi-Fi': 'Wi-Fi 6/6E', 'Android': 'Do v16', 'Waga': '236 g', 'Mobility DNA': true } },
   { name: 'Datalogic Memor 12', link: 'https://www.takma.com.pl/produkt/datalogic-memor-12', highlight: false, specs: { 'Cena od': '2 687 zł', 'Skaner': 'Halogen 2D + Green Spot', 'Ekran': '6" FHD+ (1080×2160)', 'Procesor': 'QCx4490, 2.4 GHz', 'RAM / Flash': '6/64 GB', 'Bateria': '4 000 mAh', 'Hot-swap': true, 'IP': 'IP65/IP67', 'Upadki': '1,3 m (1,5 m z boot)', 'Wi-Fi': 'Wi-Fi 6/6E', 'Android': 'Do v18', 'Waga': '245 g', 'Mobility DNA': false } },
   { name: 'M3 SM24', link: 'https://www.takma.com.pl/produkt/m3-sm24', highlight: false, specs: { 'Cena od': '3 123 zł', 'Skaner': 'CM60E 2D', 'Ekran': '6" HD+ (720×1440)', 'Procesor': 'SM6225, 2.4 GHz', 'RAM / Flash': '8/128 GB', 'Bateria': '4 000 / 6 000 mAh', 'Hot-swap': true, 'IP': 'IP67', 'Upadki': '1,5 m (1,8 m z boot)', 'Wi-Fi': 'Wi-Fi 6E', 'Android': 'Do v18', 'Waga': '240 g', 'Mobility DNA': false } },
   { name: 'Honeywell CT32', link: 'https://www.takma.com.pl/produkt/honeywell-ct32', highlight: false, specs: { 'Cena od': '3 389 zł', 'Skaner': 'FlexRange (do 11 m)', 'Ekran': '6" FHD (1080×2160)', 'Procesor': 'QCS4490, 2.4 GHz', 'RAM / Flash': '6/128 lub 8/128 GB', 'Bateria': '4 500 mAh', 'Hot-swap': true, 'IP': 'IP65/IP68', 'Upadki': '1,8 m (z boot)', 'Wi-Fi': 'Wi-Fi 6E', 'Android': 'Do v18', 'Waga': '269 g', 'Mobility DNA': false } },

@@ -3,11 +3,17 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
+import { getPrices } from '@/data/prices'
+
+const _prices = getPrices()
+const _low = Math.round(Math.min(..._prices.variants.map(v => v.price)))
+const _high = Math.round(Math.max(..._prices.variants.map(v => v.price)))
+const _fmt = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
 const faqs = [
   {
     q: 'Jaka jest cena terminala Zebra TC22 w Polsce?',
-    a: 'Zebra TC22 kosztuje od 2 417 zł netto (konfiguracja SE4710, 6/64 GB, bateria 3 800 mAh) do 3 606 zł netto (SE55 Advanced Range, 8/128 GB, RFID-ready, BLE). Wersja z 5G/GPS — Zebra TC27 — zaczyna się od 3 254 zł netto. Ceny obejmują urządzenie z baterią, bez akcesoriów. Aktualne na marzec 2026, netto PLN.',
+    a: `Zebra TC22 kosztuje od ${_fmt(_low)} zł netto (konfiguracja SE4710, 6/64 GB, bateria 3 800 mAh) do ${_fmt(_high)} zł netto (SE55 Advanced Range, 8/128 GB, RFID-ready, BLE). Wersja z 5G/GPS — Zebra TC27 — zaczyna się od 3 254 zł netto. Ceny obejmują urządzenie z baterią, bez akcesoriów. Ceny netto PLN, aktualizowane na bieżąco.`,
   },
   {
     q: 'Czym Zebra TC22 różni się od modelu TC27?',
@@ -35,11 +41,11 @@ const faqs = [
   },
   {
     q: 'Ile kosztuje Zebra TC22 vs Honeywell CT32?',
-    a: 'Zebra TC22 zaczyna się od 2 417 zł netto — Honeywell CT32 od 3 389 zł netto. CT32 jest o 40% droższy, ale oferuje dłuższą ścieżkę Android (do v18 vs v16) i skaner FlexRange z zasięgiem 11 m. TC22 jest lżejszy (236 vs 269 g), ma większy ekosystem Mobility DNA (gratis) i najszerszą sieć serwisową Zebra w Polsce. Dla firm szukających najniższego TCO — TC22. Dla projektów z perspektywą 6+ lat — CT32 wart rozważenia.',
+    a: `Zebra TC22 zaczyna się od ${_fmt(_low)} zł netto — Honeywell CT32 od 3 389 zł netto. CT32 jest o ~27% droższy w wersji bazowej, ale oferuje dłuższą ścieżkę Android (do v18 vs v16) i skaner FlexRange z zasięgiem 11 m. TC22 jest lżejszy (236 vs 269 g), ma większy ekosystem Mobility DNA (gratis) i najszerszą sieć serwisową Zebra w Polsce. Dla firm szukających najniższego TCO — TC22. Dla projektów z perspektywą 6+ lat — CT32 wart rozważenia.`,
   },
   {
     q: 'Ile kosztuje Zebra TC22 vs TC53e?',
-    a: 'TC22 od 2 417 zł netto, TC53e od ok. 4 500 zł netto — różnica ~85%. TC53e to klasa premium: bateria 4 680/7 000 mAh (vs 3 800/5 200 mAh), procesor QCS4490 2,4 GHz (vs 5430 2,1 GHz), Android do v17, nowszy skaner SE4720. TC22 wystarczy dla 80% zastosowań magazynowych i retailowych. TC53e rekomendowany dla wymagających środowisk z 3-zmianową pracą i potrzebą najdłuższego cyklu baterii.',
+    a: `TC22 od ${_fmt(_low)} zł netto, TC53e od ok. 4 500 zł netto. TC53e to klasa premium: bateria 4 680/7 000 mAh (vs 3 800/5 200 mAh), procesor QCS4490 2,4 GHz (vs 5430 2,1 GHz), Android do v17, nowszy skaner SE4720. TC22 wystarczy dla 80% zastosowań magazynowych i retailowych. TC53e rekomendowany dla wymagających środowisk z 3-zmianową pracą i potrzebą najdłuższego cyklu baterii.`,
   },
   {
     q: 'Czy mogę korzystać z płatności zbliżeniowych NFC na TC22?',
@@ -59,7 +65,7 @@ const faqs = [
   },
   {
     q: 'Jakie są alternatywy dla Zebra TC22 na rynku?',
-    a: 'Główne alternatywy w segmencie entry/mid-range: Honeywell CT32 (od 3 389 zł, Android do v18, FlexRange 11 m), Zebra TC53e (od ~4 500 zł, premium z baterią 7 000 mAh), Datalogic Memor 12 (od ~4 490 zł, Android 13, ładowanie Qi), Samsung Galaxy XCover (od ~1 500 zł, smartfon — brak profesjonalnego skanera i Mobility DNA). TC22 oferuje najlepszy stosunek cena/wydajność z darmowym Mobility DNA i najszerszą siecią serwisową Zebra w Polsce.',
+    a: `Główne alternatywy w segmencie entry/mid-range: Honeywell CT32 (od 3 389 zł, Android do v18, FlexRange 11 m), Zebra TC53e (od ~4 500 zł, premium z baterią 7 000 mAh), Datalogic Memor 12 (od ~4 490 zł, Android 13, ładowanie Qi), Samsung Galaxy XCover (od ~1 500 zł, smartfon — brak profesjonalnego skanera i Mobility DNA). TC22 (od ${_fmt(_low)} zł netto) oferuje najlepszy stosunek cena/wydajność z darmowym Mobility DNA i najszerszą siecią serwisową Zebra w Polsce.`,
   },
 ]
 
