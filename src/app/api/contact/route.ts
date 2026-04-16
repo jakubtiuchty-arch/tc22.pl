@@ -42,9 +42,16 @@ export async function POST(req: Request) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
 <title>Nowe zapytanie z tc22.pl</title>
+<style>
+:root { color-scheme: light only; supported-color-schemes: light only; }
+[data-ogsc] .hdr-title, [data-ogsb] .hdr-title { color: #f8fafc !important; }
+u + .body .hdr-title { color: #f8fafc !important; }
+</style>
 </head>
-<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0f172a">
+<body class="body" style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0f172a">
 <div style="display:none;overflow:hidden;line-height:1px;max-height:0;opacity:0">Zapytanie od ${esc(name)}${variant ? ` — wariant ${esc(variant)}` : ''}${quantity ? `, ilość ${esc(quantity)}` : ''}</div>
 
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;padding:32px 16px">
@@ -52,19 +59,19 @@ export async function POST(req: Request) {
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px -12px rgba(15,23,42,0.12)">
 
 <!-- Header -->
-<tr><td style="background:linear-gradient(135deg,#0A1A2F 0%,#1e293b 100%);padding:28px 28px 24px;position:relative">
+<tr><td bgcolor="#0A1A2F" style="background-color:#0A1A2F;background:linear-gradient(135deg,#0A1A2F 0%,#1e293b 100%);padding:28px 28px 24px">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td style="vertical-align:middle">
 <div style="color:#A8F000;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">tc22.pl</div>
-<div style="color:#ffffff;font-size:22px;font-weight:700;line-height:1.3">Nowe zapytanie ofertowe</div>
+<div class="hdr-title" style="color:#f8fafc;mso-line-height-rule:exactly;font-size:22px;font-weight:700;line-height:1.3"><font color="#f8fafc">Nowe zapytanie ofertowe</font></div>
 </td>
 <td style="vertical-align:middle;text-align:right">
-<div style="display:inline-block;padding:6px 12px;background:#A8F000;color:#0A1A2F;font-size:12px;font-weight:700;border-radius:999px">NEW</div>
+<div style="display:inline-block;padding:6px 12px;background-color:#A8F000;background:#A8F000;color:#0A1A2F;font-size:12px;font-weight:700;border-radius:999px"><font color="#0A1A2F">NEW</font></div>
 </td>
 </tr>
 </table>
-<div style="color:#94a3b8;font-size:12px;margin-top:10px">${esc(now)}</div>
+<div style="color:#cbd5e1;font-size:12px;margin-top:10px"><font color="#cbd5e1">${esc(now)}</font></div>
 </td></tr>
 
 <!-- Client name + CTA -->
