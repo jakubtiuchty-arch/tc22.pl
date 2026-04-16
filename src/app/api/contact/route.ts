@@ -24,25 +24,114 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Brak wymaganych pól' }, { status: 400 })
     }
 
-    const accessoriesList = Array.isArray(accessories) && accessories.length
-      ? accessories.map((a: string) => `<li><code>${esc(a)}</code></li>`).join('')
-      : '<li>— brak —</li>'
+    const hasAccessories = Array.isArray(accessories) && accessories.length > 0
+    const accessoriesList = hasAccessories
+      ? (accessories as string[]).map(a => `<code style="display:inline-block;padding:4px 10px;margin:2px 4px 2px 0;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;font-family:ui-monospace,monospace;font-size:12px;color:#0f172a">${esc(a)}</code>`).join('')
+      : '<span style="color:#94a3b8">— brak —</span>'
 
-    const html = `
-      <h2 style="font-family:system-ui;color:#0f172a">Nowe zapytanie z tc22.pl</h2>
-      <table style="font-family:system-ui;border-collapse:collapse" cellpadding="8">
-        <tr><td style="color:#64748b">Imię i nazwisko</td><td><strong>${esc(name)}</strong></td></tr>
-        <tr><td style="color:#64748b">E-mail</td><td><a href="mailto:${esc(email)}">${esc(email)}</a></td></tr>
-        <tr><td style="color:#64748b">Telefon</td><td><a href="tel:${esc(phone)}">${esc(phone)}</a></td></tr>
-        <tr><td style="color:#64748b">Firma</td><td>${esc(company) || '—'}</td></tr>
-        <tr><td style="color:#64748b">NIP</td><td>${esc(nip) || '—'}</td></tr>
-        <tr><td style="color:#64748b">Wariant TC22</td><td><code>${esc(variant) || '—'}</code></td></tr>
-        <tr><td style="color:#64748b">Ilość</td><td>${esc(quantity) || '1'}</td></tr>
-        <tr><td style="color:#64748b;vertical-align:top">Akcesoria</td><td><ul style="margin:0;padding-left:18px">${accessoriesList}</ul></td></tr>
-        <tr><td style="color:#64748b;vertical-align:top">Uwagi</td><td>${esc(message).replace(/\n/g, '<br>') || '—'}</td></tr>
-      </table>
-      <p style="color:#94a3b8;font-size:12px;margin-top:24px">Źródło: tc22.pl</p>
-    `.trim()
+    const now = new Date().toLocaleString('pl-PL', { timeZone: 'Europe/Warsaw', dateStyle: 'long', timeStyle: 'short' })
+
+    const messageText = String(message ?? '').trim()
+    const messageHtml = messageText
+      ? `<tr><td colspan="2" style="padding:20px 28px 4px;color:#64748b;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Uwagi / pytania</td></tr>
+         <tr><td colspan="2" style="padding:0 28px 24px"><div style="background:#f8fafc;border-left:3px solid #A8F000;border-radius:8px;padding:14px 16px;color:#0f172a;font-size:14px;line-height:1.6;white-space:pre-wrap">${esc(messageText).replace(/\n/g, '<br>')}</div></td></tr>`
+      : ''
+
+    const html = `<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nowe zapytanie z tc22.pl</title>
+</head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#0f172a">
+<div style="display:none;overflow:hidden;line-height:1px;max-height:0;opacity:0">Zapytanie od ${esc(name)}${variant ? ` — wariant ${esc(variant)}` : ''}${quantity ? `, ilość ${esc(quantity)}` : ''}</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;padding:32px 16px">
+<tr><td align="center">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 40px -12px rgba(15,23,42,0.12)">
+
+<!-- Header -->
+<tr><td style="background:linear-gradient(135deg,#0A1A2F 0%,#1e293b 100%);padding:28px 28px 24px;position:relative">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td style="vertical-align:middle">
+<div style="color:#A8F000;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">tc22.pl</div>
+<div style="color:#ffffff;font-size:22px;font-weight:700;line-height:1.3">Nowe zapytanie ofertowe</div>
+</td>
+<td style="vertical-align:middle;text-align:right">
+<div style="display:inline-block;padding:6px 12px;background:#A8F000;color:#0A1A2F;font-size:12px;font-weight:700;border-radius:999px">NEW</div>
+</td>
+</tr>
+</table>
+<div style="color:#94a3b8;font-size:12px;margin-top:10px">${esc(now)}</div>
+</td></tr>
+
+<!-- Client name + CTA -->
+<tr><td style="padding:28px 28px 20px;border-bottom:1px solid #e2e8f0">
+<div style="color:#64748b;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Od kogo</div>
+<div style="color:#0f172a;font-size:24px;font-weight:700;line-height:1.2">${esc(name)}</div>
+${company ? `<div style="color:#475569;font-size:14px;margin-top:4px">${esc(company)}</div>` : ''}
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:18px">
+<tr>
+<td style="padding-right:8px"><a href="tel:${esc(phone)}" style="display:inline-block;padding:10px 18px;background:#A8F000;color:#0A1A2F;font-size:13px;font-weight:700;text-decoration:none;border-radius:999px">📞 Zadzwoń</a></td>
+<td><a href="mailto:${esc(email)}?subject=Re%3A%20Zapytanie%20z%20tc22.pl" style="display:inline-block;padding:10px 18px;background:#0A1A2F;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;border-radius:999px">✉ Odpowiedz</a></td>
+</tr>
+</table>
+</td></tr>
+
+<!-- Produkt -->
+<tr><td style="padding:24px 28px 8px;color:#64748b;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Interesujący produkt</td></tr>
+<tr><td style="padding:0 28px 20px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px">
+<tr>
+<td style="padding:16px 18px;vertical-align:middle">
+<div style="color:#0f172a;font-size:16px;font-weight:700">Zebra TC22</div>
+<div style="color:#475569;font-size:13px;font-family:ui-monospace,monospace;margin-top:2px">${variant ? esc(variant) : '— wariant nie wybrany —'}</div>
+</td>
+<td style="padding:16px 18px;vertical-align:middle;text-align:right;white-space:nowrap">
+<div style="color:#64748b;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Ilość</div>
+<div style="color:#0A1A2F;font-size:28px;font-weight:800;line-height:1">${esc(quantity) || '1'}</div>
+<div style="color:#64748b;font-size:11px;margin-top:2px">szt.</div>
+</td>
+</tr>
+</table>
+</td></tr>
+
+<!-- Akcesoria -->
+<tr><td style="padding:4px 28px 8px;color:#64748b;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Akcesoria</td></tr>
+<tr><td style="padding:0 28px 20px;font-size:13px;line-height:1.8">${accessoriesList}</td></tr>
+
+<!-- Dane kontaktowe -->
+<tr><td style="padding:8px 28px 8px;color:#64748b;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Dane kontaktowe</td></tr>
+<tr><td style="padding:0 28px 20px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px">
+<tr><td width="110" style="padding:8px 0;color:#64748b;border-bottom:1px solid #f1f5f9">E-mail</td><td style="padding:8px 0;border-bottom:1px solid #f1f5f9"><a href="mailto:${esc(email)}" style="color:#0A1A2F;text-decoration:none;font-weight:600">${esc(email)}</a></td></tr>
+<tr><td style="padding:8px 0;color:#64748b;border-bottom:1px solid #f1f5f9">Telefon</td><td style="padding:8px 0;border-bottom:1px solid #f1f5f9"><a href="tel:${esc(phone)}" style="color:#0A1A2F;text-decoration:none;font-weight:600">${esc(phone)}</a></td></tr>
+${company ? `<tr><td style="padding:8px 0;color:#64748b;border-bottom:1px solid #f1f5f9">Firma</td><td style="padding:8px 0;color:#0f172a;border-bottom:1px solid #f1f5f9">${esc(company)}</td></tr>` : ''}
+${nip ? `<tr><td style="padding:8px 0;color:#64748b">NIP</td><td style="padding:8px 0;color:#0f172a;font-family:ui-monospace,monospace">${esc(nip)}</td></tr>` : ''}
+</table>
+</td></tr>
+
+${messageHtml}
+
+<!-- Footer -->
+<tr><td style="padding:20px 28px 24px;background:#f8fafc;border-top:1px solid #e2e8f0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td style="color:#94a3b8;font-size:11px">Źródło: <a href="https://tc22.pl" style="color:#475569;text-decoration:none;font-weight:600">tc22.pl</a></td>
+<td style="color:#94a3b8;font-size:11px;text-align:right">TAKMA · partner Zebra od 2001</td>
+</tr>
+</table>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+
+</body>
+</html>`.trim()
 
     const { data, error } = await resend.emails.send({
       from: `tc22.pl <${FROM}>`,
