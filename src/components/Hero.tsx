@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { CheckCircle, ArrowRight } from 'lucide-react'
 import { getPrices } from '@/data/prices'
 
@@ -11,18 +10,22 @@ const formatPLN = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden min-h-[500px] lg:min-h-[600px]">
-      {/* Background Image */}
-      <Image
-        src="/images/tc22_hero_2.webp"
-        alt="Zebra TC22 — terminal mobilny w środowisku magazynowym"
-        fill
-        className="object-cover object-[60%_50%] sm:object-[75%_50%]"
-        priority
-      />
+    <section className="relative overflow-hidden min-h-[500px] lg:min-h-[600px] bg-[#0A1A2F]">
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover"
+        aria-hidden="true"
+      >
+        <source src="/videos/tc22_hero_3.mp4" type="video/mp4" />
+      </video>
 
       {/* Overlay — mocniejszy po lewej dla czytelności tekstu */}
-      <div className="absolute inset-0 bg-black/50 lg:bg-transparent lg:bg-gradient-to-r lg:from-black/75 lg:from-20% lg:via-black/40 lg:via-45% lg:to-transparent lg:to-65%" />
+      <div className="absolute inset-0 bg-black/50 lg:bg-transparent lg:bg-gradient-to-r lg:from-black/80 lg:from-10% lg:via-black/45 lg:via-45% lg:to-black/20 lg:to-70%" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12 lg:pt-20 lg:pb-24">
         <div className="max-w-xl lg:max-w-2xl">
