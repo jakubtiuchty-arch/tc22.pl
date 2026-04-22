@@ -15,7 +15,7 @@ const highDisplay = fmtPLN(highPrice)
 const lastModifiedISO = prices.lastSync
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tc22.pl'),
+  metadataBase: new URL('https://www.tc22.pl'),
   title: `Zebra TC22 — terminal mobilny od ${lowDisplay} zł netto | TAKMA`,
   description: `Zebra TC22: terminal mobilny 6" FHD+, skaner 1D/2D (do 7,6 m), Wi-Fi 6E, IP68, Android do v16. 7 wariantów od ${lowDisplay} zł netto. Partner Zebra — TAKMA.`,
   keywords: ['zebra tc22', 'tc22', 'terminal mobilny zebra tc22', 'zebra tc22 cena', 'zebra tc22 dane techniczne', 'tc22 vs tc27', 'terminal mobilny do magazynu', 'kolektor danych zebra', 'WLMT0-T22'],
@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   creator: 'TAKMA',
   publisher: 'TAKMA Tadeusz Tiuchty',
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
-  alternates: { canonical: 'https://tc22.pl' },
+  alternates: { canonical: 'https://www.tc22.pl' },
   openGraph: {
     type: 'website',
     locale: 'pl_PL',
-    url: 'https://tc22.pl',
+    url: 'https://www.tc22.pl',
     siteName: 'tc22.pl — Zebra TC22 | TAKMA',
     title: `Zebra TC22 — terminal mobilny od ${lowDisplay} zł | TAKMA`,
     description: `Wytrzymały terminal Zebra TC22: 6" FHD+, skaner 1D/2D, IP68, MIL-STD-810H, Android do v16. 7 wariantów od ${lowDisplay} zł netto.`,
@@ -78,7 +78,7 @@ function JsonLd() {
   const product = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    '@id': 'https://tc22.pl/#product',
+    '@id': 'https://www.tc22.pl/#product',
     name: 'Zebra TC22',
     alternateName: ['Terminal mobilny Zebra TC22', 'Kolektor danych Zebra TC22', 'Zebra WLMT0-T22'],
     description: 'Wytrzymały terminal mobilny klasy enterprise z ekranem 6" FHD+, skanerem 1D/2D (SE4710 lub SE55 do 7,6 m), Wi-Fi 6/6E, IP68, MIL-STD-810H i systemem Android do v16.',
@@ -87,8 +87,8 @@ function JsonLd() {
     category: 'Terminale mobilne',
     sku: sortedByPrice[0].pn,
     mpn: 'WLMT0-T22',
-    image: ['https://tc22.pl/images/tc22_scanner_1.png', 'https://tc22.pl/images/tc22_scanner_2.png', 'https://tc22.pl/images/tc22_scanner_3.png'],
-    url: 'https://tc22.pl',
+    image: ['https://www.tc22.pl/images/tc22_scanner_1.png', 'https://www.tc22.pl/images/tc22_scanner_2.png', 'https://www.tc22.pl/images/tc22_scanner_3.png'],
+    url: 'https://www.tc22.pl',
     sameAs: 'https://www.zebra.com/us/en/products/mobile-computers/handheld/tc22-tc27.html',
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'Procesor', value: 'Qualcomm 5430 hex-core 2.1 GHz' },
@@ -115,7 +115,7 @@ function JsonLd() {
         priceCurrency: 'PLN',
         availability: v.availability === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
         itemCondition: 'https://schema.org/NewCondition',
-        url: 'https://tc22.pl/#warianty',
+        url: 'https://www.tc22.pl/#warianty',
         seller: { '@type': 'Organization', name: 'TAKMA Tadeusz Tiuchty' },
       })),
     },
@@ -145,14 +145,14 @@ function JsonLd() {
   const webpage = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    '@id': 'https://tc22.pl/#webpage',
-    url: 'https://tc22.pl',
+    '@id': 'https://www.tc22.pl/#webpage',
+    url: 'https://www.tc22.pl',
     name: `Zebra TC22 — terminal mobilny od ${lowDisplay} zł netto | TAKMA`,
     description: `Strona produktowa terminala Zebra TC22 prowadzona przez autoryzowanego partnera Zebra — TAKMA.`,
     inLanguage: 'pl-PL',
     isPartOf: { '@id': 'https://takma.com.pl/#website' },
-    about: { '@id': 'https://tc22.pl/#product' },
-    primaryImageOfPage: { '@type': 'ImageObject', url: 'https://tc22.pl/images/tc22_scanner_1.png' },
+    about: { '@id': 'https://www.tc22.pl/#product' },
+    primaryImageOfPage: { '@type': 'ImageObject', url: 'https://www.tc22.pl/images/tc22_scanner_1.png' },
     dateModified: lastModifiedISO,
     author: { '@id': 'https://takma.com.pl/#organization' },
     publisher: { '@id': 'https://takma.com.pl/#organization' },
@@ -164,7 +164,7 @@ function JsonLd() {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'TAKMA', item: 'https://takma.com.pl' },
       { '@type': 'ListItem', position: 2, name: 'Terminale mobilne', item: 'https://takma.com.pl/terminale-mobilne' },
-      { '@type': 'ListItem', position: 3, name: 'Zebra TC22', item: 'https://tc22.pl' },
+      { '@type': 'ListItem', position: 3, name: 'Zebra TC22', item: 'https://www.tc22.pl' },
     ],
   }
 
