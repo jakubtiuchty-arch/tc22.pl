@@ -18,6 +18,7 @@ export default function Hero() {
         loop
         playsInline
         preload="auto"
+        poster="/images/tc22_hero.jpg"
         className="absolute inset-0 w-full h-full object-cover object-right lg:object-center"
         aria-hidden="true"
       >
