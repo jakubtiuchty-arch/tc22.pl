@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import { getPrices } from '@/data/prices'
 
@@ -47,6 +48,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} antialiased`}>
         {children}
         <JsonLd />
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="Dit1gvJlDPMaN80ku9qM5A"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
