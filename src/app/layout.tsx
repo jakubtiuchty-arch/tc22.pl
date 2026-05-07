@@ -16,9 +16,9 @@ const lastModifiedISO = prices.lastSync
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.tc22.pl'),
-  title: `Zebra TC22 — terminal mobilny od ${lowDisplay} zł netto | TAKMA`,
-  description: `Zebra TC22: terminal mobilny 6" FHD+, skaner 1D/2D (do 7,6 m), Wi-Fi 6E, IP68, Android do v16. 7 wariantów od ${lowDisplay} zł netto. Partner Zebra — TAKMA.`,
-  keywords: ['zebra tc22', 'tc22', 'terminal mobilny zebra tc22', 'zebra tc22 cena', 'zebra tc22 dane techniczne', 'tc22 vs tc27', 'terminal mobilny do magazynu', 'kolektor danych zebra', 'WLMT0-T22'],
+  title: `Zebra TC22 — zamów na testy, demo dla Twojej firmy | TAKMA`,
+  description: `Zebra TC22 — zamów terminal mobilny na bezpłatne testy w Twojej firmie. Sprawdź w praktyce: 6" FHD+, skaner do 7,6 m, IP68, Android do v16. Demo i wycena dla magazynu — TAKMA, partner Zebra.`,
+  keywords: ['zebra tc22 testy', 'zebra tc22 demo', 'zebra tc22 wycena', 'zamów na testy zebra tc22', 'zebra tc22 wdrożenie', 'zebra tc22 dla firmy', 'demo terminala mobilnego', 'zebra tc22 wypożyczenie', 'tc22 vs tc27', 'terminal mobilny do testów', 'WLMT0-T22'],
   authors: [{ name: 'TAKMA Tadeusz Tiuchty', url: 'https://takma.com.pl' }],
   creator: 'TAKMA',
   publisher: 'TAKMA Tadeusz Tiuchty',
@@ -29,14 +29,14 @@ export const metadata: Metadata = {
     locale: 'pl_PL',
     url: 'https://www.tc22.pl',
     siteName: 'tc22.pl — Zebra TC22 | TAKMA',
-    title: `Zebra TC22 — terminal mobilny od ${lowDisplay} zł | TAKMA`,
-    description: `Wytrzymały terminal Zebra TC22: 6" FHD+, skaner 1D/2D, IP68, MIL-STD-810H, Android do v16. 7 wariantów od ${lowDisplay} zł netto.`,
-    images: [{ url: '/images/tc22_hero.jpg', width: 1200, height: 630, alt: 'Terminal mobilny Zebra TC22 — partner TAKMA' }],
+    title: `Zebra TC22 — zamów na testy, demo dla Twojej firmy | TAKMA`,
+    description: `Zamów Zebra TC22 na bezpłatne testy w Twojej firmie. Skaner 1D/2D, IP68, MIL-STD-810H, Android do v16. Demo, wycena i wdrożenie — TAKMA, partner Zebra.`,
+    images: [{ url: '/images/tc22_hero.jpg', width: 1200, height: 630, alt: 'Terminal mobilny Zebra TC22 — zamów na testy w TAKMA' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Zebra TC22 — terminal mobilny od ${lowDisplay} zł | TAKMA`,
-    description: 'Wi-Fi 6E, ekran 6", IP68, skaner 1D/2D SE4710/SE55. Autoryzowany partner Zebra — TAKMA.',
+    title: `Zebra TC22 — zamów na testy w Twojej firmie | TAKMA`,
+    description: 'Bezpłatne testy Zebra TC22 w Twojej firmie. Wi-Fi 6E, IP68, skaner 1D/2D. Demo i wycena — TAKMA, partner Zebra.',
     images: ['/images/tc22_hero.jpg'],
   },
 }

@@ -2,11 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { CheckCircle, ArrowRight } from 'lucide-react'
-import { getPrices } from '@/data/prices'
-
-const prices = getPrices()
-const lowPrice = Math.round(Math.min(...prices.variants.map(v => v.price)))
-const formatPLN = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
 
 export default function Hero() {
   return (
@@ -45,7 +40,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="mt-3 text-xl sm:text-2xl font-normal text-slate-300"
           >
-            Wi-Fi 6E, skaner 1D/2D, IP68 — od {formatPLN(lowPrice)} zł netto
+            Zamów na testy w Twojej firmie — Wi-Fi 6E, skaner 1D/2D, IP68
           </motion.p>
 
           <motion.p
@@ -54,8 +49,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-4 text-base sm:text-lg text-slate-300 max-w-xl font-medium"
           >
-            Wytrzymały kolektor danych klasy enterprise z ekranem 6&quot; FHD+ i procesorem Qualcomm 5430.
-            Autoryzowany partner Zebra — TAKMA, od 2001 r.
+            Wypróbuj Zebra TC22 w realnych warunkach pracy — bezpłatne demo dla Twojego magazynu, sklepu lub linii produkcyjnej.
+            Wytrzymały kolektor danych z ekranem 6&quot; FHD+ i procesorem Qualcomm 5430. Autoryzowany partner Zebra — TAKMA, od 2001 r.
           </motion.p>
 
           <motion.ul
@@ -85,12 +80,21 @@ export default function Hero() {
             className="mt-8 flex flex-col sm:flex-row gap-3"
           >
             <a
-              href="#warianty"
+              href="#kontakt"
               className="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-slate-900 transition-all duration-200 bg-brand-500 rounded-full hover:bg-brand-400 hover:shadow-lg hover:shadow-brand-500/30 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
             >
-              <span>Zobacz warianty i ceny</span>
+              <span>Zamów na testy</span>
               <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
               <div className="absolute inset-0 -z-10 rounded-full bg-brand-500 opacity-20 blur-lg transition-opacity duration-200 group-hover:opacity-40" />
+            </a>
+            <a
+              href="https://www.takma.com.pl/produkt/zebra-tc22"
+              target="_blank"
+              rel="noopener"
+              className="group inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white transition-all duration-200 border border-white/30 rounded-full hover:bg-white/10 hover:border-white/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/40"
+            >
+              <span>Sprawdź ceny w sklepie TAKMA</span>
+              <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
           </motion.div>
         </div>
