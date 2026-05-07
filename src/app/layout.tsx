@@ -169,7 +169,7 @@ function JsonLd() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'TAKMA', item: 'https://takma.com.pl' },
-      { '@type': 'ListItem', position: 2, name: 'Terminale mobilne', item: 'https://takma.com.pl/terminale-mobilne' },
+      { '@type': 'ListItem', position: 2, name: 'Terminale mobilne', item: 'https://www.takma.com.pl/terminale-mobilne-zebra' },
       { '@type': 'ListItem', position: 3, name: 'Zebra TC22', item: 'https://www.tc22.pl' },
     ],
   }

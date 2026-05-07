@@ -16,7 +16,7 @@ const footerLinks = {
   tc22: [
     { name: 'TC22 w sklepie', href: 'https://takma.com.pl/produkt/zebra-tc22' },
     { name: 'TC27 (wersja 5G)', href: 'https://takma.com.pl/produkt/zebra-tc27' },
-    { name: 'Terminale mobilne', href: 'https://takma.com.pl/terminale-mobilne' },
+    { name: 'Terminale mobilne', href: 'https://www.takma.com.pl/terminale-mobilne-zebra' },
     { name: 'Instrukcja TC22 (PL)', href: 'https://serwis-zebry.pl/instrukcje/zebra-tc22/instrukcja-po-polsku' },
     { name: 'Datasheet Zebra (EN)', href: 'https://www.zebra.com/us/en/support-downloads/mobile-computers/handheld/tc22-tc27.html' },
   ],
